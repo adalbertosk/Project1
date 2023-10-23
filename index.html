@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>Project1</head>
+    <body>
+        <input type="type/text" id="favMovie">
+        <button id="callAPI">Call API</button>
+        <script type="text/JavaScript">
+            document.getElementById("callAPI").onclick = function() {
+                var favMovie = document.getElementById("favMovie").value;
+
+                fetch('index.php', {
+	                method: 'POST',
+	                headers: {
+		                'X-Requested-With': 'XMLHttpRequest',
+	                },
+	                body: JSON.stringify({
+		                favorite: favMovie
+	                })
+                });
+
+            }
+        </script>
+    </body>
+</html>
