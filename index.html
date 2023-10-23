@@ -2,22 +2,89 @@
 <html>
     <head>Project1</head>
     <body>
-        <input type="type/text" id="favMovie">
-        <button id="callAPI">Call API</button>
+        <br>
+        <p><label for="in_id">ID</label><input type="type/text" id="in_id"></p>
+        <p><label for="in_name">Name</label><input type="type/text" id="in_name"></p>
+        <p><label for="in_birthdate">Birthdate</label><input type="type/date" id="in_birthdate"></p>
+        <p><label for="in_gender">Gender</label><input type="type/text" id="in_gender"></p>
+        <p><label for="in_maritalstatus">Marital Status</label><input type="type/text" id="in_maritalstatus"></p>
+        <p><label for="in_taxid">Tax ID</label><input type="type/text" id="in_taxid"></p>
+        <p><label for="in_phone">Phone</label><input type="type/text" id="in_phone"></p>
+        <p><label for="in_email">Email</label><input type="type/text" id="in_email"></p>
+        <br>
+        <button id="btn_search">Search</button><button id="btn_create">Create</button>
+        <br>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Birthdate</th>
+                    <th>Gender</th>
+                    <th>Marital Status</th>
+                    <th>Tax ID</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody id="data">
+            </tbody>
+        </table>
         <script type="text/JavaScript">
-            document.getElementById("callAPI").onclick = function() {
-                var favMovie = document.getElementById("favMovie").value;
-
+            document.getElementById("btn_search").onclick = function() {
+                var id = document.getElementById("in_id").value;
+                var url = 'index.php?id=' + id;
+                let newItem;
+                fetch(url, {
+	                headers: {
+		                'X-Requested-With': 'XMLHttpRequest',
+	                }
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    data.message.forEach((itemLine) => {
+                        newItem += "<tr>";
+                        newItem += "<td>" + itemLine.id + "</td>";
+                        newItem += "<td>" + itemLine.name + "</td>";
+                        newItem += "<td>" + itemLine.birthdate + "</td>";
+                        newItem += "<td>" + itemLine.gender + "</td>";
+                        newItem += "<td>" + itemLine.maritalstatus + "</td>";
+                        newItem += "<td>" + itemLine.taxid + "</td>";
+                        newItem += "<td>" + itemLine.phone + "</td>";
+                        newItem += "<td>" + itemLine.email + "</td>";
+                        newItem += "<td>" + itemLine.created_at + "</td>";
+                        newItem += "</tr>";
+                    });
+                    document.getElementById("data").innerHTML = newItem;
+                });
+            },
+            document.getElementById("btn_create").onclick = function() {
+                var name = document.getElementById("in_name").value;
+                var birthdate = document.getElementById("in_birthdate").value;
+                var gender = document.getElementById("in_gender").value;
+                var maritalstatus = document.getElementById("in_maritalstatus").value;
+                var taxid = document.getElementById("in_taxid").value;
+                var phone = document.getElementById("in_phone").value;
+                var email = document.getElementById("in_email").value;
                 fetch('index.php', {
 	                method: 'POST',
 	                headers: {
 		                'X-Requested-With': 'XMLHttpRequest',
 	                },
 	                body: JSON.stringify({
-		                favorite: favMovie
+//		                id:
+                        name: name,
+                        birthdate: birthdate,
+                        gender: gender,
+                        maritalstatus: maritalstatus,
+                        taxid: taxid,
+                        phone: phone,
+                        email: email
+//                        created_at: 
 	                })
-                });
-
+                })
+                .then((response) => response.json());
             }
         </script>
     </body>

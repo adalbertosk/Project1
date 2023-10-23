@@ -1,4 +1,6 @@
 <?php
+// https://gomakethings.com/how-to-create-your-own-api-endpoints-with-php/
+
 /* 
     $link = mysqli_connect("localhost", "adalberto", "password", "project1");
 
@@ -12,6 +14,9 @@
         echo "Query was successful!";
     }
  */
+$config = parse_ini_file('bd.ini');
+$conn = mysqli_connect($config['dbhost'], $config['username'], $config['password']);
+mysqli_select_db($conn, $config['db']);
 
  /**
  * Get the API method
@@ -51,35 +56,48 @@ $data = get_request_data();
 // Get some data and respond with it
 if ($method === 'GET') {
 
-	// You'd normally do stuff here...
-	// Let's just send back a success message
-	send_response([
-		'status' => 'success',
-		'message' => 'You did it, dude!',
-	]);
-
+    $sql = "SELECT * FROM `project1`.`person` WHERE id='{$data['id']}';";
+    $get_data_query = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+        if(mysqli_num_rows($get_data_query)!=0){
+        $result = array();
+        
+        while($r = mysqli_fetch_array($get_data_query)){
+            extract($r);
+            $result[] = array("id" => $id, "name" => $name, 'birthdate' => $birthdate,
+                            "gender" => $gender, "maritalstatus" => $maritalstatus, 
+                            "taxid" => $taxid, "phone" => $phone, "email" => $email,
+                            "created_at" => $created_at );
+        }
+        send_response([
+            'status' => 'success',
+            'message' => $result,
+        ]);
+    }
+    else{
+        send_response([
+            'status' => 'failed',
+            'message' => 'Not found',
+        ], 400);
+    }    
 }
 
 // POST request
 // Store some data or something
 if ($method === 'POST') {
 
-	// You'd normally do stuff here...
-
-	// Example: Check that all required data was provided
-	if (empty($data['favorite'])) {
-		send_response([
-			'status' => 'failed',
-			'message' => 'Please provide a favorite movie.',
-		], 400);
-	}
-
-	// If there are no issues, save your data or something...
-
-	// Then, respond with a success
-	send_response([
-		'status' => 'success',
-		'message' => 'This movie was saved to your favorites!',
-	]);
-
+    $sql = "INSERT INTO person (name, birthdate, gender, maritalstatus, taxid, phone, email) VALUES ('{$data['name']}', '{$data['birthdate']}', '{$data['gender']}', '{$data['maritalstatus']}', '{$data['taxid']}', '{$data['phone']}', '{$data['email']}')";
+    if(mysqli_query($conn, $sql)) {
+        send_response([
+            'status' => 'success',
+            'message' => 'Created successfully',
+        ]);
+    }
+    else {
+        send_response([
+            'status' => 'failed',
+            'message' => 'Error when creating',
+        ], 400);
+    }
 }
+
+@mysqli_close($conn);
