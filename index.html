@@ -3,14 +3,27 @@
     <head>Project1</head>
     <body>
         <br>
-        <p><label for="in_id">ID</label><input type="type/text" id="in_id"></p>
-        <p><label for="in_name">Name</label><input type="type/text" id="in_name"></p>
-        <p><label for="in_birthdate">Birthdate</label><input type="type/date" id="in_birthdate"></p>
-        <p><label for="in_gender">Gender</label><input type="type/text" id="in_gender"></p>
-        <p><label for="in_maritalstatus">Marital Status</label><input type="type/text" id="in_maritalstatus"></p>
-        <p><label for="in_taxid">Tax ID</label><input type="type/text" id="in_taxid"></p>
-        <p><label for="in_phone">Phone</label><input type="type/text" id="in_phone"></p>
-        <p><label for="in_email">Email</label><input type="type/text" id="in_email"></p>
+        <p><label for="in_id">ID</label><input type="text" id="in_id"></p>
+        <p><label for="in_name">Name</label><input type="text" id="in_name"></p>
+        <p><label for="in_birthdate">Birthdate</label><input type="date" id="in_birthdate"></p>
+        <p>
+            <label for="sel_gender">Gender</label>
+            <select name="sel_gender" id="sel_gender">
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
+        </p>
+        <p>
+            <label for="sel_maritalstatus">Marital Status</label>
+            <select name="sel_maritalstatus" id="sel_maritalstatus">
+                <option value="M">Married</option>
+                <option value="S">Single</option>
+                <option value="D">Divorced</option>
+            </select>
+        </p>
+        <p><label for="in_taxid">Tax ID</label><input type="text" id="in_taxid"></p>
+        <p><label for="in_phone">Phone</label><input type="text" id="in_phone"></p>
+        <p><label for="in_email">Email</label><input type="text" id="in_email"></p>
         <br>
         <button id="btn_search">Search</button><button id="btn_create">Create</button>
         <br>
@@ -62,8 +75,8 @@
             document.getElementById("btn_create").onclick = function() {
                 var name = document.getElementById("in_name").value;
                 var birthdate = document.getElementById("in_birthdate").value;
-                var gender = document.getElementById("in_gender").value;
-                var maritalstatus = document.getElementById("in_maritalstatus").value;
+                var gender = document.getElementById("sel_gender").value;
+                var maritalstatus = document.getElementById("sel_maritalstatus").value;
                 var taxid = document.getElementById("in_taxid").value;
                 var phone = document.getElementById("in_phone").value;
                 var email = document.getElementById("in_email").value;
