@@ -1,19 +1,6 @@
 <?php
 // https://gomakethings.com/how-to-create-your-own-api-endpoints-with-php/
 
-/* 
-    $link = mysqli_connect("localhost", "adalberto", "password", "project1");
-
-    if(mysqli_connect_error()) {
-        die("There was an error connecting to the database.");
-    }
-
-    $query = "SELECT * FROM person";
-
-    if(mysqli_query($link, $query)) {
-        echo "Query was successful!";
-    }
- */
 $config = parse_ini_file('bd.ini');
 $conn = mysqli_connect($config['dbhost'], $config['username'], $config['password']);
 mysqli_select_db($conn, $config['db']);
@@ -56,7 +43,7 @@ $data = get_request_data();
 // Get some data and respond with it
 if ($method === 'GET') {
 
-    $sql = "SELECT * FROM `project1`.`person` WHERE id='{$data['id']}';";
+    $sql = "SELECT * FROM `project1`.`person`"; // WHERE id='{$data['id']}';";
     $get_data_query = mysqli_query($conn, $sql) or die(mysqli_error($conn));
         if(mysqli_num_rows($get_data_query)!=0){
         $result = array();
@@ -96,6 +83,44 @@ if ($method === 'POST') {
         send_response([
             'status' => 'failed',
             'message' => 'Error when creating',
+        ], 400);
+    }
+}
+
+// DELETE request
+// Delete some data
+if ($method === 'DELETE') {
+
+    $sql = "DELETE FROM person WHERE id ='{$data['id']}'";
+    if(mysqli_query($conn, $sql)) {
+        send_response([
+            'status' => 'success',
+            'message' => 'Deleted successfully',
+        ]);
+    }
+    else {
+        send_response([
+            'status' => 'failed',
+            'message' => 'Error when deleting',
+        ], 400);
+    }
+}
+
+// PUT request
+// Update some data
+if ($method === 'PUT') {
+
+    $sql = "UPDATE person SET name = '{$data['name']}', birthdate = '{$data['birthdate']}', gender = '{$data['gender']}', maritalstatus = '{$data['maritalstatus']}', taxid = '{$data['taxid']}', phone = '{$data['phone']}', email = '{$data['email']}' WHERE id = '{$data['id']}'";
+    if(mysqli_query($conn, $sql)) {
+        send_response([
+            'status' => 'success',
+            'message' => 'Updated successfully',
+        ]);
+    }
+    else {
+        send_response([
+            'status' => 'failed',
+            'message' => 'Error when updating',
         ], 400);
     }
 }

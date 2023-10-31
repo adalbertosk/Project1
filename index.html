@@ -1,9 +1,27 @@
 <!DOCTYPE html>
 <html>
-    <head>Project1</head>
+    <head>
+        <h1>Person Data Management</h1>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
     <body>
-        <br>
-        <p><label for="in_id">ID</label><input type="text" id="in_id"></p>
+        <div class="form-popup" id="myForm">
+            <form action="/action_page.php" class="form-container">
+              <h1>Login</h1>
+          
+              <label for="email"><b>Email</b></label>
+              <input type="text" placeholder="Enter Email" name="email" required>
+          
+              <label for="psw"><b>Password</b></label>
+              <input type="password" placeholder="Enter Password" name="psw" required>
+          
+              <button type="submit" class="btn">Login</button>
+              <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+            </form>
+          </div>
+
+
+        <p><label for="in_id">ID</label><input type="number" id="in_id"></p>
         <p><label for="in_name">Name</label><input type="text" id="in_name"></p>
         <p><label for="in_birthdate">Birthdate</label><input type="date" id="in_birthdate"></p>
         <p>
@@ -19,15 +37,16 @@
                 <option value="M">Married</option>
                 <option value="S">Single</option>
                 <option value="D">Divorced</option>
+                <option value="W">Widowed</option>
             </select>
         </p>
         <p><label for="in_taxid">Tax ID</label><input type="text" id="in_taxid"></p>
         <p><label for="in_phone">Phone</label><input type="text" id="in_phone"></p>
-        <p><label for="in_email">Email</label><input type="text" id="in_email"></p>
+        <p><label for="in_email">Email</label><input type="email" id="in_email"></p>
         <br>
-        <button id="btn_search">Search</button><button id="btn_create">Create</button>
+        <button id="btn_create">Create</button><button id="btn_save">Save</button>
         <br>
-        <table>
+        <table id="myTable">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -39,66 +58,14 @@
                     <th>Phone</th>
                     <th>Email</th>
                     <th>Created At</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody id="data">
             </tbody>
         </table>
-        <script type="text/JavaScript">
-            document.getElementById("btn_search").onclick = function() {
-                var id = document.getElementById("in_id").value;
-                var url = 'index.php?id=' + id;
-                let newItem;
-                fetch(url, {
-	                headers: {
-		                'X-Requested-With': 'XMLHttpRequest',
-	                }
-                })
-                .then((response) => response.json())
-                .then((data) => {
-                    data.message.forEach((itemLine) => {
-                        newItem += "<tr>";
-                        newItem += "<td>" + itemLine.id + "</td>";
-                        newItem += "<td>" + itemLine.name + "</td>";
-                        newItem += "<td>" + itemLine.birthdate + "</td>";
-                        newItem += "<td>" + itemLine.gender + "</td>";
-                        newItem += "<td>" + itemLine.maritalstatus + "</td>";
-                        newItem += "<td>" + itemLine.taxid + "</td>";
-                        newItem += "<td>" + itemLine.phone + "</td>";
-                        newItem += "<td>" + itemLine.email + "</td>";
-                        newItem += "<td>" + itemLine.created_at + "</td>";
-                        newItem += "</tr>";
-                    });
-                    document.getElementById("data").innerHTML = newItem;
-                });
-            },
-            document.getElementById("btn_create").onclick = function() {
-                var name = document.getElementById("in_name").value;
-                var birthdate = document.getElementById("in_birthdate").value;
-                var gender = document.getElementById("sel_gender").value;
-                var maritalstatus = document.getElementById("sel_maritalstatus").value;
-                var taxid = document.getElementById("in_taxid").value;
-                var phone = document.getElementById("in_phone").value;
-                var email = document.getElementById("in_email").value;
-                fetch('index.php', {
-	                method: 'POST',
-	                headers: {
-		                'X-Requested-With': 'XMLHttpRequest',
-	                },
-	                body: JSON.stringify({
-//		                id:
-                        name: name,
-                        birthdate: birthdate,
-                        gender: gender,
-                        maritalstatus: maritalstatus,
-                        taxid: taxid,
-                        phone: phone,
-                        email: email
-//                        created_at: 
-	                })
-                })
-                .then((response) => response.json());
-            }
-        </script>
+
+          
+        <script type="text/JavaScript" src="script.js"></script>
     </body>
 </html>
