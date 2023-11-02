@@ -1,71 +1,66 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <h1>Person Data Management</h1>
-        <link rel="stylesheet" type="text/css" href="style.css">
-    </head>
-    <body>
-        <div class="form-popup" id="myForm">
-            <form action="/action_page.php" class="form-container">
-              <h1>Login</h1>
-          
-              <label for="email"><b>Email</b></label>
-              <input type="text" placeholder="Enter Email" name="email" required>
-          
-              <label for="psw"><b>Password</b></label>
-              <input type="password" placeholder="Enter Password" name="psw" required>
-          
-              <button type="submit" class="btn">Login</button>
-              <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-            </form>
-          </div>
 
+<head>
+    <h1>Person Data Management</h1>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
 
-        <p><label for="in_id">ID</label><input type="number" id="in_id"></p>
-        <p><label for="in_name">Name</label><input type="text" id="in_name"></p>
-        <p><label for="in_birthdate">Birthdate</label><input type="date" id="in_birthdate"></p>
-        <p>
-            <label for="sel_gender">Gender</label>
-            <select name="sel_gender" id="sel_gender">
+<body>
+    <br>
+    <button id="btn_create">Create</button><button id="btn_save">Save</button>
+    <br>
+    <div class="form-popup" id="myForm">
+        <form action="create.php" class="form-container" method="post">
+            <h1>New Person</h1>
+            <label for="in_name"><b>Name</b></label>
+            <input type="text" name="name" id="in_name">
+            <label for="in_birthdate"><b>Birthdate</b></label>
+            <input type="date" name="birthdate" id="in_birthdate">
+            <label for="sel_gender"><b>Gender</b></label>
+            <select name="gender" id="sel_gender">
                 <option value="M">Male</option>
                 <option value="F">Female</option>
             </select>
-        </p>
-        <p>
-            <label for="sel_maritalstatus">Marital Status</label>
-            <select name="sel_maritalstatus" id="sel_maritalstatus">
+            <label for="sel_maritalstatus"><b>Marital Status</b></label>
+            <select name="maritalstatus" id="sel_maritalstatus">
                 <option value="M">Married</option>
                 <option value="S">Single</option>
                 <option value="D">Divorced</option>
                 <option value="W">Widowed</option>
             </select>
-        </p>
-        <p><label for="in_taxid">Tax ID</label><input type="text" id="in_taxid"></p>
-        <p><label for="in_phone">Phone</label><input type="text" id="in_phone"></p>
-        <p><label for="in_email">Email</label><input type="email" id="in_email"></p>
-        <br>
-        <button id="btn_create">Create</button><button id="btn_save">Save</button>
-        <br>
-        <table id="myTable">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Birthdate</th>
-                    <th>Gender</th>
-                    <th>Marital Status</th>
-                    <th>Tax ID</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Created At</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody id="data">
-            </tbody>
-        </table>
+            <label for="in_taxid"><b>Tax ID</b></label>
+            <input type="text" name="taxid" id="in_taxid">
+            <label for="in_phone"><b>Phone</b></label>
+            <input type="text" name="phone" id="in_phone">
+            <label for="in_email"><b>Email</b></label>
+            <input type="email" name="email" id="in_email">
+            <button type="submit" class="btn">Create</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
+        </form>
+    </div>
 
-          
-        <script type="text/JavaScript" src="script.js"></script>
-    </body>
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Birthdate</th>
+                <th>Gender</th>
+                <th>Marital Status</th>
+                <th>Tax ID</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Created At</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody id="data">
+        </tbody>
+    </table>
+
+
+    <script type="text/JavaScript" src="script.js"></script>
+</body>
+
 </html>

@@ -13,8 +13,25 @@ window.addEventListener('load', function (event) {
                 newItem += `<td><input type="number" value="` + itemLine.id + `" readonly></td>`;
                 newItem += `<td><input type="text" value="` + itemLine.name + `"></td>`;
                 newItem += `<td><input type="date" value="` + itemLine.birthdate + `"></td>`;
-                newItem += `<td><input type="text" value="` + itemLine.gender + `"></td>`;
-                newItem += `<td><input type="text" value="` + itemLine.maritalstatus + `"></td>`;
+                if(itemLine.gender === 'M'){
+                    newItem += `<td><select><option value="` + itemLine.gender + `" selected>Male</option><option value="F">Female</option></td>`;
+                } else {
+                    newItem += `<td><select><option value="M">Male</option><option value="` + itemLine.gender + `" selected>Female</option></td>`;
+                }
+                switch(itemLine.maritalstatus) {
+                    case "M":
+                        newItem += `<td><select><option value="` + itemLine.maritalstatus + `" selected>Married</option><option value="S">Single</option><option value="D">Divorced</option><option value="W">Widowed</option></td>`;
+                        break;
+                    case "S":
+                        newItem += `<td><select><option value="M">Married</option><option value="` + itemLine.maritalstatus + `" selected>Single</option><option value="D">Divorced</option><option value="W">Widowed</option></td>`;
+                        break;
+                    case "D":
+                        newItem += `<td><select><option value="M">Married</option><option value="S">Single</option><option value="` + itemLine.maritalstatus + `" selected>Divorced</option><option value="W">Widowed</option></td>`;
+                        break;
+                    case "W":
+                        newItem += `<td><select><option value="M">Married</option><option value="S">Single</option><option value="D">Divorced</option><option value="` + itemLine.maritalstatus + `" selected>Widowed</option></td>`;
+                        break;
+                }
                 newItem += `<td><input type="text" value="` + itemLine.taxid + `"></td>`;
                 newItem += `<td><input type="text" value="` + itemLine.phone + `"></td>`;
                 newItem += `<td><input type="email" value="` + itemLine.email + `"></td>`;
